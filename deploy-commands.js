@@ -1,10 +1,19 @@
 const { REST, Routes, SlashCommandBuilder } = require('discord.js');
 
 const commands = [
-    new SlashCommandBuilder().setName('matricule-add').setDescription('Ajouter un matricule').addStringOption(o => o.setName('numero').setRequired(true).setDescription('Ex: 01')),
-    new SlashCommandBuilder().setName('matricule').setDescription('Prendre un matricule'),
-    new SlashCommandBuilder().setName('all-matricules').setDescription('Voir tout le monde'),
-    new SlashCommandBuilder().setName('set-dispatch').setDescription('Salon du 21h'),
+    new SlashCommandBuilder()
+        .setName('matricule-add')
+        .setDescription('Enregistrer un matricule pour un agent')
+        .addStringOption(o => o.setName('numero').setDescription('Numéro (ex: 01)').setRequired(true))
+        .addUserOption(o => o.setName('agent').setDescription('L’agent correspondant').setRequired(true)),
+    
+    new SlashCommandBuilder()
+        .setName('all-matricules')
+        .setDescription('Voir la liste complète'),
+
+    new SlashCommandBuilder()
+        .setName('dispatch')
+        .setDescription('Ouvrir le menu de rédaction du dispatch'),
 ].map(c => c.toJSON());
 
 const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
@@ -12,6 +21,6 @@ const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
 (async () => {
     try {
         await rest.put(Routes.applicationCommands(process.env.CLIENT_ID), { body: commands });
-        console.log('Commandes enregistrées !');
+        console.log('✅ Nouvelles commandes enregistrées !');
     } catch (e) { console.error(e); }
 })();
