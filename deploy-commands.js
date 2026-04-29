@@ -24,3 +24,4 @@ const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
         console.log('✅ Nouvelles commandes enregistrées !');
     } catch (e) { console.error(e); }
 })();
+new SlashCommandBuilder().setName('set-panel').setDescription('Créer le panel de statistiques dans ce salon'),
