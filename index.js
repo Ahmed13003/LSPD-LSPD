@@ -99,3 +99,21 @@ client.on('interactionCreate', async interaction => {
 });
 
 client.login(process.env.TOKEN);
+if (interaction.commandName === 'all-matricules') {
+        // Sécurité : on vérifie si l'objet matricules existe bien
+        if (!db.matricules || Object.keys(db.matricules).length === 0) {
+            return await interaction.reply({ content: "❌ Aucun matricule n'est enregistré pour le moment.", ephemeral: true });
+        }
+
+        let desc = Object.entries(db.matricules)
+            .sort((a, b) => a[0].localeCompare(b[0]))
+            .map(([n, d]) => `**[${n}]** : <@${d.owner}>`)
+            .join('\n');
+
+        const embed = new EmbedBuilder()
+            .setTitle("📋 Registre LSPD")
+            .setDescription(desc)
+            .setColor(0x0055FF);
+
+        await interaction.reply({ embeds: [embed] });
+    }
