@@ -18,6 +18,10 @@ const commands = [
     new SlashCommandBuilder()
         .setName('set-panel')
         .setDescription('Créer le panel de statistiques dans ce salon'),
+
+    new SlashCommandBuilder()
+        .setName('service')
+        .setDescription('Prendre ou quitter son service'),
 ].map(c => c.toJSON());
 
 const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
@@ -30,7 +34,4 @@ const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
     } catch (e) { 
         console.error('Erreur lors du déploiement :', e); 
     }
-new SlashCommandBuilder()
-    .setName('service')
-    .setDescription('Prendre ou quitter son service'),
 })();
